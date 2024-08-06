@@ -1,0 +1,152 @@
+:root {
+  --size: 25vh;
+  --half: calc(0.48 * var(--size));
+  --third: calc(0.29 * var(--size));
+  --height: calc(3 * var(--size));
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: #222;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div {
+  width: var(--size);
+}
+
+/* COUNTRY SELECTION */
+
+label.country {
+  display: inline-block;
+  width: var(--half);
+  height: var(--half);
+  border-radius: var(--half);
+  border: 0.3em outset #888;
+  box-sizing: border-box;
+
+  background-color: #fff;
+}
+
+label.country span {
+  display: inline-block;
+  width: 100%;
+  font-size: var(--third);
+  line-height: 1.75em;
+  text-align: center;
+  color: #ccc;
+}
+
+label.country :checked ~ span{
+  color: #fff;
+}
+
+label.country:has(:checked){
+  border-style: inset;
+  background-color: #000;
+}
+
+/* TRAFFIC LIGHTS */
+
+main {
+  position: relative;
+}
+
+/* Use unlit red light as template for others... */
+span.circle {
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  border-radius: var(--size);
+  background-color: red;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+/* ... then set their color */
+label.amber span.circle{
+  background-color: #d90;
+}
+
+label.green span.circle {
+  background-color: green;
+}
+
+/* Move radio buttons off-screen */
+input {
+  position: absolute;
+  left: -999px;
+}
+
+/* When a light's checkbox is checked, make it bright... */
+input:checked ~ .circle {
+  opacity: 1;
+}
+/* ...and hide its .trigger span, so the .trigger for another 
+ * light will be at the front
+ */
+input:checked ~ .trigger {
+  display: none;
+}
+
+/* Make all the .trigger spans fill the main element, so that
+ * a click anywhere will have an effect.
+ */
+span.trigger {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: var(--size);
+  height: var(--height);
+  cursor: pointer;
+}
+
+/* When .red light is on, move .ready .trigger to front
+ * (UK cycle only)
+ */
+body:has(.uk :checked) main:has(.red :checked) .ready .trigger {
+  z-index: 1;
+}
+
+/* When .ready is checked, show both .red and .amber lights.
+ * The .ready .trigger is now at the back, so .green .trigger
+ * is at the front
+ * (UK cycle only)
+ */
+main:has(.ready :checked) .red .circle,
+main:has(.ready :checked) .amber .circle {
+  opacity: 1;
+}
+
+/* In Fr cycle, .green will always be at front */
+/* When .green .trigger is checked, .amber .trigger is at front */
+ 
+/* When .amber is checked, move .red .trigger to the front */
+main:has(.amber :checked) .red .trigger {
+  z-index: 1;
+}
+
+
+/* Show the GitHub logo */
+a {
+  width: 0;
+  height: 0;
+
+  img {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    width: 32px;
+    height: 32px;
+    filter: grayscale(1);
+    opacity: 0.25;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
