@@ -1,4 +1,4 @@
-* Traffic Lights #
+# Traffic Lights #
 
 [Demo](https://MERNCraft.github.io/traffic-lights)
 
