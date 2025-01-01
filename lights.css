@@ -1,8 +1,11 @@
 :root {
-  --size: 25vh;
-  --half: calc(0.48 * var(--size));
-  --third: calc(0.29 * var(--size));
-  --height: calc(3 * var(--size));
+  --height: 300px;
+  --width: calc(0.5 * var(--height));
+  --size: calc(0.56 * var(--width));
+  --half: calc(0.5 * var(--size));
+  --font: calc(0.25 * var(--size));
+  --margin: calc(0.06 * var(--size));
+  --border: calc(0.04 * var(--size));
 }
 
 body {
@@ -15,44 +18,54 @@ body {
   align-items: center;
 }
 
-div {
-  width: var(--size);
+main {
+  width: var(--width);
+  height: var(--height);
+  position: relative;
 }
 
 /* COUNTRY SELECTION */
 
-label.country {
+div#country {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--margin);
+}
+
+#country label {
   display: inline-block;
   width: var(--half);
   height: var(--half);
   border-radius: var(--half);
-  border: 0.3em outset #888;
+  border: var(--border) outset #888;
   box-sizing: border-box;
 
   background-color: #fff;
 }
 
-label.country span {
+#country label span {
   display: inline-block;
   width: 100%;
-  font-size: var(--third);
+  font-size: var(--font);
   line-height: 1.75em;
   text-align: center;
   color: #ccc;
 }
 
-label.country :checked ~ span{
+#country label :checked ~ span{
   color: #fff;
 }
 
-label.country:has(:checked){
+#country label:has(:checked){
   border-style: inset;
   background-color: #000;
 }
 
 /* TRAFFIC LIGHTS */
 
-main {
+div#lights {
+  margin: 0 auto;
+  width: var(--size);
   position: relative;
 }
 
@@ -86,22 +99,23 @@ input {
 input:checked ~ .circle {
   opacity: 1;
 }
-/* ...and hide its .trigger span, so the .trigger for another 
+/* ...and hide its .trigger span, so the .trigger for another
  * light will be at the front
  */
 input:checked ~ .trigger {
   display: none;
 }
 
-/* Make all the .trigger spans fill the main element, so that
- * a click anywhere will have an effect.
+/* Make all the .trigger spans fill the div#lights element,
+ * so that a click on any light will have an effect.
  */
 span.trigger {
   display: inline-block;
   position: absolute;
   top: 0;
-  width: var(--size);
-  height: var(--height);
+  left: 0;
+  right: 0;
+  bottom: 0;
   cursor: pointer;
 }
 
@@ -124,12 +138,11 @@ main:has(.ready :checked) .amber .circle {
 
 /* In Fr cycle, .green will always be at front */
 /* When .green .trigger is checked, .amber .trigger is at front */
- 
+
 /* When .amber is checked, move .red .trigger to the front */
 main:has(.amber :checked) .red .trigger {
   z-index: 1;
 }
-
 
 /* Show the GitHub logo */
 a {
